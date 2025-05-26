@@ -232,7 +232,7 @@
             {
                 id: 6,
                 title: "喜欢的其他电影、电视剧和音乐",
-                content: "我还喜欢很多电影，比如情书、错过你的那些年等。喜欢的电视剧包括老友记和爱情公寓。喜欢王菲、单依纯孙燕姿、张碧晨、莫文蔚和许嵩等人的歌。",
+                content: "我还喜欢很多电影，比如情书、错过你的那些年等。喜欢的电视剧包括老友记和爱情公寓。喜欢王菲、单依纯孙燕姿、张碧晨、莫文蔚、陶喆、方大同和许嵩等人的歌。",
                 category: "hobby",
                 date: "2012-09-11",
                 media: null
@@ -240,9 +240,9 @@
             {
                 id: 5,
                 title: "喜欢宫崎骏的电影",
-                content: "大约从那时开始，我就成了宫崎骏的忠实粉丝。千与千寻这部电影，从小到大（哪怕是到现在）我还会n刷，估计到现在，早看了几十次了。除此之外，我还喜欢很多电影，比如情书、错过你的那些年等。还喜欢一些电视剧，比如老友记和爱情公寓。",
+                content: "我是宫崎骏的忠实粉丝。千与千寻这部电影，从小到大（哪怕是到现在）我还会n刷，到现在早看了几十次了。",
                 category: "hobby",
-                date: "2012-09-11",
+                date: "2004-07-02",
                 media: null
             },
 
@@ -539,8 +539,13 @@
                             
                             // 导航菜单中的分类链接
                             if (btn.tagName === 'A') {
-                                btn.classList.add('text-primary');
+                                btn.classList.add('text-primary', 'font-medium');
                                 btn.classList.remove('text-dark');
+                                
+                                // 修复移动端分类链接背景问题
+                                if (btn.closest('#mobile-category-menu')) {
+                                    btn.classList.add('bg-primary/10');
+                                }
                             }
                         } else {
                             // 主分类标签按钮
@@ -551,8 +556,13 @@
                             
                             // 导航菜单中的分类链接
                             if (btn.tagName === 'A') {
-                                btn.classList.remove('text-primary');
+                                btn.classList.remove('text-primary', 'font-medium');
                                 btn.classList.add('text-dark');
+                                
+                                // 修复移动端分类链接背景问题
+                                if (btn.closest('#mobile-category-menu')) {
+                                    btn.classList.remove('bg-primary/10');
+                                }
                             }
                         }
                     });
@@ -570,7 +580,7 @@
                     resetAndLoadThoughts();
                 });
             });
-        }
+        }    
 
         // 处理搜索
         function handleSearch() {
