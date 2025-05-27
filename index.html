@@ -808,10 +808,10 @@
                     // 更新所有分类按钮样式
                     categoryElements.forEach(btn => {
                         if (btn.getAttribute('data-category') === currentCategory) {
-                            // 主分类标签按钮 - 确保应用蓝色背景
+                            // 主分类标签按钮
                             if (btn.classList.contains('category-btn')) {
                                 btn.classList.add('bg-primary', 'text-white');
-                                btn.classList.remove('bg-white', 'text-dark', 'bg-gray-200', 'text-gray-700'); // 移除可能的灰色背景类
+                                btn.classList.remove('bg-white', 'text-dark');
                             }
                             
                             // 导航菜单中的分类链接
@@ -857,7 +857,7 @@
                     resetAndLoadThoughts();
                 });
             });
-        } 
+        }    
 
         // 处理搜索
         function handleSearch() {
