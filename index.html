@@ -301,7 +301,14 @@
                 date: "2025-04-20",
                 media: null
             },
-
+            {
+                id: 14,
+                title: "坚持跑步",
+                content: "喜欢在四运跑步，之前甚至经常大半夜在外面跑。目前最远的一次是跑了16km，40圈。计划有时间跑个20km，50圈~",
+                category: "hobby",
+                date: "2024-09-20",
+                media: null
+            },
             {
                 id: 16,
                 title: "担任比亚迪校园大使",
@@ -595,12 +602,13 @@
                             
                             // 导航菜单中的分类链接
                             if (btn.tagName === 'A') {
-                                btn.classList.add('text-primary', 'font-medium');
-                                btn.classList.remove('text-dark');
+                                btn.classList.add('text-white', 'font-medium', 'bg-primary');
+                                btn.classList.remove('text-dark', 'bg-white', 'bg-primary/5');
                                 
                                 // 修复移动端分类链接背景问题
                                 if (btn.closest('#mobile-category-menu')) {
-                                    btn.classList.add('bg-primary/10');
+                                    btn.classList.add('bg-primary');
+                                    btn.classList.remove('bg-primary/10');
                                 }
                             }
                         } else {
@@ -612,12 +620,12 @@
                             
                             // 导航菜单中的分类链接
                             if (btn.tagName === 'A') {
-                                btn.classList.remove('text-primary', 'font-medium');
-                                btn.classList.add('text-dark');
+                                btn.classList.remove('text-white', 'font-medium', 'bg-primary');
+                                btn.classList.add('text-dark', 'bg-white');
                                 
                                 // 修复移动端分类链接背景问题
                                 if (btn.closest('#mobile-category-menu')) {
-                                    btn.classList.remove('bg-primary/10');
+                                    btn.classList.remove('bg-primary');
                                 }
                             }
                         }
@@ -636,7 +644,7 @@
                     resetAndLoadThoughts();
                 });
             });
-        }    
+        }       
 
         // 处理搜索
         function handleSearch() {
