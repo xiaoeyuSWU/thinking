@@ -166,12 +166,6 @@
             padding-top: 0.5rem;
             padding-bottom: 0.5rem;
         }
-        @media (max-width: 767px) {
-        .category-btn.bg-primary {
-            background-color: #4A6FA5 !important;
-            color: white !important;
-        }
-        }
     </style>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
@@ -804,66 +798,40 @@
             // 获取所有分类按钮和链接
             const categoryElements = document.querySelectorAll('[data-category]');
             
-            categoryElements.forEach(element => {
-                element.addEventListener('click', (e) => {
-                    e.preventDefault();
+            // 更新所有分类按钮样式
+            categoryElements.forEach(btn => {
+                if (btn.getAttribute('data-category') === currentCategory) {
+                    // 主分类标签按钮（移动端和桌面端）
+                    if (btn.classList.contains('category-btn')) {
+                        btn.classList.add('bg-primary', 'text-white');
+                        btn.classList.remove('bg-white', 'text-dark', 'hover:bg-primary/5');
+                    }
                     
-                    // 更新当前分类
-                    currentCategory = element.getAttribute('data-category');
-                    
-                    // 更新所有分类按钮样式
-                    categoryElements.forEach(btn => {
-                        if (btn.getAttribute('data-category') === currentCategory) {
-                            // 主分类标签按钮
-                            if (btn.classList.contains('category-btn')) {
-                                btn.classList.add('bg-primary', 'text-white');
-                                btn.classList.remove('bg-white', 'text-dark');
-                            }
-                            
-                            // 导航菜单中的分类链接
-                            if (btn.tagName === 'A') {
-                                // 移除所有可能冲突的样式
-                                btn.classList.remove('text-dark', 'bg-primary/10');
-                                // 添加正确的主色样式
-                                btn.classList.add('bg-primary', 'text-white', 'font-medium');
-                                
-                                // 特别处理移动端分类链接的圆角样式
-                                if (btn.closest('#mobile-category-menu')) {
-                                    btn.classList.add('rounded-full', 'px-3', 'py-1', 'mx-1');
-                                }
-                            }
-                        } else {
-                            // 主分类标签按钮
-                            if (btn.classList.contains('category-btn')) {
-                                btn.classList.remove('bg-primary', 'text-white');
-                                btn.classList.add('bg-white', 'text-dark');
-                            }
-                            
-                            // 导航菜单中的分类链接
-                            if (btn.tagName === 'A') {
-                                btn.classList.add('text-primary', 'font-medium');
-                                btn.classList.remove('text-dark');
-                                
-                                // 修复移动端分类链接背景问题
-                                if (btn.closest('#mobile-category-menu')) {
-                                    btn.classList.add('bg-primary/10');
-                                }
-                            }
+                    // 导航菜单中的分类链接（保持原有样式）
+                    if (btn.tagName === 'A') {
+                        btn.classList.add('text-primary', 'font-medium');
+                        btn.classList.remove('text-dark');
+                        if (btn.closest('#mobile-category-menu')) {
+                            btn.classList.add('bg-primary/10');
                         }
-                    });
-                    
-                    // 移动端菜单处理
-                    if (!mobileMenu.classList.contains('opacity-0')) {
-                        toggleMobileMenu();
+                    }
+                } else {
+                    // 主分类标签按钮（移动端和桌面端）
+                    if (btn.classList.contains('category-btn')) {
+                        btn.classList.remove('bg-primary', 'text-white');
+                        btn.classList.add('bg-white', 'text-dark');
+                        btn.classList.add('hover:bg-primary/5'); // 保持 hover 效果
                     }
                     
-                    if (!mobileCategoryMenu.classList.contains('hidden')) {
-                        toggleMobileCategoryMenu();
+                    // 导航菜单中的分类链接（保持原有样式）
+                    if (btn.tagName === 'A') {
+                        btn.classList.remove('text-primary', 'font-medium');
+                        btn.classList.add('text-dark');
+                        if (btn.closest('#mobile-category-menu')) {
+                            btn.classList.remove('bg-primary/10');
+                        }
                     }
-                    
-                    // 重置并加载思考内容
-                    resetAndLoadThoughts();
-                });
+                }
             });
         }    
 
