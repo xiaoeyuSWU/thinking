@@ -585,8 +585,9 @@
                                 
                                 // 修复移动端分类链接背景问题
                                 if (btn.closest('#mobile-category-menu')) {
-                                    btn.classList.add('bg-primary/10');
+                                    btn.classList.add('bg-primary/10', 'text-primary'); // 或用 'text-white' 取决于你希望的对比色
                                 }
+
                             }
                         } else {
                             // 主分类标签按钮
@@ -602,7 +603,7 @@
                                 
                                 // 修复移动端分类链接背景问题
                                 if (btn.closest('#mobile-category-menu')) {
-                                    btn.classList.remove('bg-primary/10');
+                                    btn.classList.add('bg-primary/10', 'text-primary'); // 或用 'text-white' 取决于你希望的对比色
                                 }
                             }
                         }
@@ -706,4 +707,4 @@
         document.addEventListener('DOMContentLoaded', init);
     </script>
 </body>
-</html>    
+</html>
