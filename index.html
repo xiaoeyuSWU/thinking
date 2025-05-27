@@ -38,6 +38,9 @@
             .nav-shadow {
                 box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.1);
             }
+            .skeleton {
+                @apply bg-gray-200 animate-pulse rounded;
+            }
         }
     </style>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -72,8 +75,13 @@
             
             <!-- 搜索框 -->
             <div class="relative hidden md:block w-64">
-                <input id="search-input" type="text" placeholder="搜索内容..." class="w-full pl-10 pr-4 py-2 rounded-full border border-gray-200 focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all">
-                <i class="fa fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                <div class="relative">
+                    <input id="search-input" type="text" placeholder="搜索内容..." class="w-full pl-10 pr-4 py-2 rounded-full border border-gray-200 focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all">
+                    <button id="search-button" class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-primary transition-colors">
+                        <i class="fa fa-search"></i>
+                    </button>
+                    <i class="fa fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                </div>
             </div>
             
             <!-- 移动端菜单按钮 -->
@@ -83,11 +91,16 @@
         </div>
         
         <!-- 移动端导航菜单 -->
-        <div id="mobile-menu" class="md:hidden bg-white shadow-lg absolute w-full left-0 top-full transform -translate-y-full opacity-0 transition-all duration-300 pointer-events-none">
+        <div id="mobile-menu" class="md:hidden bg-white shadow-lg absolute w-full left-0 top-full opacity-0 transition-all duration-300 transform -translate-y-4 pointer-events-none">
             <div class="container mx-auto px-4 py-3">
                 <div class="relative mb-4">
-                    <input id="mobile-search-input" type="text" placeholder="搜索内容..." class="w-full pl-10 pr-4 py-2 rounded-full border border-gray-200 focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all">
-                    <i class="fa fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                    <div class="relative">
+                        <input id="mobile-search-input" type="text" placeholder="搜索内容..." class="w-full pl-10 pr-4 py-2 rounded-full border border-gray-200 focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all">
+                        <button id="mobile-search-button" class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-primary transition-colors">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        <i class="fa fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                    </div>
                 </div>
                 <nav class="flex flex-col space-y-3">
                     <a href="#" class="font-medium text-dark hover:text-primary transition-colors py-2">首页</a>
@@ -130,7 +143,46 @@
             
             <!-- 思考内容流 -->
             <div id="thoughts-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- 思考条目将通过JavaScript动态添加 -->
+                <!-- 骨架屏加载效果 -->
+                <div class="skeleton-card col-span-full md:col-span-1 lg:col-span-1 bg-white rounded-lg overflow-hidden shadow-md animate-pulse">
+                    <div class="p-6">
+                        <div class="flex items-center mb-3">
+                            <div class="skeleton w-20 h-5 rounded-full"></div>
+                            <div class="skeleton ml-2 w-24 h-4 rounded"></div>
+                        </div>
+                        <div class="skeleton h-8 w-3/4 rounded mb-4"></div>
+                        <div class="skeleton h-4 w-full rounded mb-2"></div>
+                        <div class="skeleton h-4 w-5/6 rounded mb-2"></div>
+                        <div class="skeleton h-4 w-2/3 rounded mb-6"></div>
+                        <div class="skeleton h-5 w-24 rounded"></div>
+                    </div>
+                </div>
+                <div class="skeleton-card col-span-full md:col-span-1 lg:col-span-1 bg-white rounded-lg overflow-hidden shadow-md animate-pulse">
+                    <div class="p-6">
+                        <div class="flex items-center mb-3">
+                            <div class="skeleton w-20 h-5 rounded-full"></div>
+                            <div class="skeleton ml-2 w-24 h-4 rounded"></div>
+                        </div>
+                        <div class="skeleton h-8 w-2/3 rounded mb-4"></div>
+                        <div class="skeleton h-4 w-full rounded mb-2"></div>
+                        <div class="skeleton h-4 w-5/6 rounded mb-2"></div>
+                        <div class="skeleton h-4 w-3/4 rounded mb-6"></div>
+                        <div class="skeleton h-5 w-24 rounded"></div>
+                    </div>
+                </div>
+                <div class="skeleton-card col-span-full md:col-span-1 lg:col-span-1 bg-white rounded-lg overflow-hidden shadow-md animate-pulse">
+                    <div class="p-6">
+                        <div class="flex items-center mb-3">
+                            <div class="skeleton w-20 h-5 rounded-full"></div>
+                            <div class="skeleton ml-2 w-24 h-4 rounded"></div>
+                        </div>
+                        <div class="skeleton h-8 w-4/5 rounded mb-4"></div>
+                        <div class="skeleton h-4 w-full rounded mb-2"></div>
+                        <div class="skeleton h-4 w-5/6 rounded mb-2"></div>
+                        <div class="skeleton h-4 w-3/4 rounded mb-6"></div>
+                        <div class="skeleton h-5 w-24 rounded"></div>
+                    </div>
+                </div>
             </div>
             
             <!-- 加载更多 -->
@@ -322,11 +374,13 @@
         // 当前显示的思考数量
         let currentCount = 0;
         // 每次加载的数量
-        const loadCount = 5000000
+        const loadCount = 3;
         // 当前筛选的分类
         let currentCategory = 'all';
         // 当前搜索关键词
         let currentSearchTerm = '';
+        // 是否正在加载
+        let isLoading = false;
 
         // DOM 元素
         const thoughtsContainer = document.getElementById('thoughts-container');
@@ -340,6 +394,8 @@
         const mobileCategoryMenu = document.getElementById('mobile-category-menu');
         const searchInput = document.getElementById('search-input');
         const mobileSearchInput = document.getElementById('mobile-search-input');
+        const searchButton = document.getElementById('search-button');
+        const mobileSearchButton = document.getElementById('mobile-search-button');
         const categoryButtons = document.querySelectorAll('.category-btn');
 
         // 分类名称映射
@@ -483,6 +539,11 @@
 
         // 修改后的思考内容排序逻辑
         function loadThoughts() {
+            // 如果正在加载，直接返回
+            if (isLoading) return;
+            
+            isLoading = true;
+            
             // 筛选思考内容
             const filteredThoughts = filterThoughts(currentCategory, currentSearchTerm);
             
@@ -497,12 +558,18 @@
             loadingIndicator.classList.remove('hidden');
             noMoreContentIndicator.classList.add('hidden');
             
+            // 计算本次加载的数量
+            const remainingCount = totalCount - currentCount;
+            const countToLoad = Math.min(loadCount, remainingCount);
+            
+            // 移除骨架屏
+            const skeletonCards = document.querySelectorAll('.skeleton-card');
+            skeletonCards.forEach(card => {
+                card.remove();
+            });
+            
             // 模拟加载延迟
             setTimeout(() => {
-                // 计算本次加载的数量
-                const remainingCount = totalCount - currentCount;
-                const countToLoad = Math.min(loadCount, remainingCount);
-                
                 // 添加新的思考卡片
                 for (let i = 0; i < countToLoad; i++) {
                     const thought = sortedThoughts[currentCount + i];
@@ -520,6 +587,8 @@
                 if (currentCount >= totalCount) {
                     noMoreContentIndicator.classList.remove('hidden');
                 }
+                
+                isLoading = false;
             }, 800);
         }    
 
@@ -544,8 +613,29 @@
             
             // 重置计数
             currentCount = 0;
-            // 加载思考内容
-            loadThoughts();
+            
+            // 添加骨架屏
+            for (let i = 0; i < 3; i++) {
+                const skeletonCard = document.createElement('div');
+                skeletonCard.className = 'skeleton-card col-span-full md:col-span-1 lg:col-span-1 bg-white rounded-lg overflow-hidden shadow-md animate-pulse';
+                skeletonCard.innerHTML = `
+                    <div class="p-6">
+                        <div class="flex items-center mb-3">
+                            <div class="skeleton w-20 h-5 rounded-full"></div>
+                            <div class="skeleton ml-2 w-24 h-4 rounded"></div>
+                        </div>
+                        <div class="skeleton h-8 w-${Math.floor(Math.random() * 20 + 60)}% rounded mb-4"></div>
+                        <div class="skeleton h-4 w-full rounded mb-2"></div>
+                        <div class="skeleton h-4 w-${Math.floor(Math.random() * 20 + 60)}% rounded mb-2"></div>
+                        <div class="skeleton h-4 w-${Math.floor(Math.random() * 20 + 40)}% rounded mb-6"></div>
+                        <div class="skeleton h-5 w-24 rounded"></div>
+                    </div>
+                `;
+                thoughtsContainer.appendChild(skeletonCard);
+            }
+            
+            // 延迟加载内容，给骨架屏显示时间
+            setTimeout(loadThoughts, 1000);
         }
 
         // 处理滚动加载
@@ -553,7 +643,7 @@
             const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
             
             // 当滚动到页面底部附近时加载更多内容
-            if (scrollTop + clientHeight >= scrollHeight - 300 && !loadingIndicator.classList.contains('hidden') && currentCount < thoughts.length) {
+            if (scrollTop + clientHeight >= scrollHeight - 300 && !isLoading && currentCount < thoughts.length) {
                 loadThoughts();
             }
             
@@ -658,9 +748,9 @@
                 }
             }
             
-            // 搜索输入框事件
-            searchInput.addEventListener('input', performSearch);
-            mobileSearchInput.addEventListener('input', performSearch);
+            // 搜索按钮事件
+            searchButton.addEventListener('click', performSearch);
+            mobileSearchButton.addEventListener('click', performSearch);
             
             // 搜索输入框回车事件
             searchInput.addEventListener('keydown', (e) => {
@@ -679,12 +769,12 @@
         // 切换移动端菜单
         function toggleMobileMenu() {
             if (mobileMenu.classList.contains('opacity-0')) {
-                mobileMenu.classList.remove('opacity-0', '-translate-y-full', 'pointer-events-none');
-                mobileMenu.classList.add('opacity-100', 'translate-y-0', 'pointer-events-auto');
+                mobileMenu.classList.remove('opacity-0', 'pointer-events-none', '-translate-y-4');
+                mobileMenu.classList.add('opacity-100', 'pointer-events-auto', 'translate-y-0');
                 mobileMenuButton.innerHTML = '<i class="fa fa-times text-xl"></i>';
             } else {
-                mobileMenu.classList.add('opacity-0', '-translate-y-full', 'pointer-events-none');
-                mobileMenu.classList.remove('opacity-100', 'translate-y-0', 'pointer-events-auto');
+                mobileMenu.classList.add('opacity-0', 'pointer-events-none', '-translate-y-4');
+                mobileMenu.classList.remove('opacity-100', 'pointer-events-auto', 'translate-y-0');
                 mobileMenuButton.innerHTML = '<i class="fa fa-bars text-xl"></i>';
             }
         }
@@ -703,7 +793,7 @@
         // 初始化
         function init() {
             // 加载初始思考内容
-            loadThoughts();
+            resetAndLoadThoughts();
             
             // 注册滚动事件
             window.addEventListener('scroll', handleScroll);
@@ -729,3 +819,4 @@
     </script>
 </body>
 </html>
+    
