@@ -306,12 +306,6 @@
                 </div>
             </div>
             
-            <!-- 加载更多 -->
-            <div id="loading" class="text-center py-10 hidden">
-                <div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
-                <p class="mt-2 text-gray-500">加载中...</p>
-            </div>
-            
             <!-- 没有更多内容 -->
             <div id="no-more-content" class="text-center py-10 hidden">
                 <p class="text-gray-500">我也是有底线滴~</p>
@@ -503,7 +497,7 @@
         // 当前显示的思考数量
         let currentCount = 0;
         // 每次加载的数量
-        const loadCount = 300;
+        const loadCount = 500;
         // 当前筛选的分类
         let currentCategory = 'all';
         // 当前搜索关键词
@@ -513,7 +507,6 @@
 
         // DOM 元素
         const thoughtsContainer = document.getElementById('thoughts-container');
-        const loadingIndicator = document.getElementById('loading');
         const noMoreContentIndicator = document.getElementById('no-more-content');
         const backToTopButton = document.getElementById('back-to-top');
         const navbar = document.getElementById('navbar');
@@ -542,6 +535,56 @@
             'milestone': 'bg-orange-500',
             'study': 'bg-green-500'
         };
+
+        // 计算每个类别的内容数量
+        function calculateCategoryCounts() {
+            const counts = {
+                all: thoughts.length,
+                ai: 0,
+                hobby: 0,
+                milestone: 0,
+                study: 0
+            };
+            
+            thoughts.forEach(thought => {
+                if (counts[thought.category]) {
+                    counts[thought.category]++;
+                }
+            });
+            
+            return counts;
+        }
+
+        // 更新类别按钮的计数显示
+        function updateCategoryCounts() {
+            const counts = calculateCategoryCounts();
+            const categoryButtons = document.querySelectorAll('.category-btn');
+            
+            categoryButtons.forEach(button => {
+                const category = button.getAttribute('data-category');
+                let buttonText = '';
+                
+                switch(category) {
+                    case 'all':
+                        buttonText = '全部';
+                        break;
+                    case 'ai':
+                        buttonText = 'AI';
+                        break;
+                    case 'hobby':
+                        buttonText = '爱好';
+                        break;
+                    case 'milestone':
+                        buttonText = '大事记';
+                        break;
+                    case 'study':
+                        buttonText = '学业';
+                        break;
+                }
+                
+                button.textContent = `${buttonText} (${counts[category]})`;
+            });
+        }
 
         // 创建思考卡片
         function createThoughtCard(thought) {
@@ -666,6 +709,43 @@
             });
         }
 
+        // 搜索或筛选后更新类别计数（显示当前筛选条件下的计数）
+        function updateCategoryCountsAfterSearch() {
+            const counts = {
+                all: filterThoughts('all', currentSearchTerm).length,
+                ai: filterThoughts('ai', currentSearchTerm).length,
+                hobby: filterThoughts('hobby', currentSearchTerm).length,
+                milestone: filterThoughts('milestone', currentSearchTerm).length,
+                study: filterThoughts('study', currentSearchTerm).length
+            };
+            
+            const categoryButtons = document.querySelectorAll('.category-btn');
+            categoryButtons.forEach(button => {
+                const category = button.getAttribute('data-category');
+                let buttonText = '';
+                
+                switch(category) {
+                    case 'all':
+                        buttonText = '全部';
+                        break;
+                    case 'ai':
+                        buttonText = 'AI';
+                        break;
+                    case 'hobby':
+                        buttonText = '爱好';
+                        break;
+                    case 'milestone':
+                        buttonText = '大事记';
+                        break;
+                    case 'study':
+                        buttonText = '学业';
+                        break;
+                }
+                
+                button.textContent = `${buttonText} (${counts[category]})`;
+            });
+        }
+
         // 修改后的思考内容排序逻辑
         function loadThoughts() {
             // 如果正在加载，直接返回
@@ -683,19 +763,15 @@
             
             const totalCount = sortedThoughts.length;
             
-            // 显示加载指示器
-            loadingIndicator.classList.remove('hidden');
-            noMoreContentIndicator.classList.add('hidden');
-            
-            // 计算本次加载的数量
-            const remainingCount = totalCount - currentCount;
-            const countToLoad = Math.min(loadCount, remainingCount);
-            
             // 移除骨架屏
             const skeletonCards = document.querySelectorAll('.skeleton-card');
             skeletonCards.forEach(card => {
                 card.remove();
             });
+            
+            // 计算本次加载的数量
+            const remainingCount = totalCount - currentCount;
+            const countToLoad = Math.min(loadCount, remainingCount);
             
             // 模拟加载延迟
             setTimeout(() => {
@@ -708,9 +784,6 @@
                 
                 // 更新当前显示的数量
                 currentCount += countToLoad;
-                
-                // 隐藏加载指示器
-                loadingIndicator.classList.add('hidden');
                 
                 // 检查是否还有更多内容
                 if (currentCount >= totalCount) {
@@ -735,8 +808,10 @@
                         <p class="text-gray-500">没有找到与"${currentSearchTerm}"相关的内容</p>
                     </div>
                 `;
-                loadingIndicator.classList.add('hidden');
                 noMoreContentIndicator.classList.add('hidden');
+                
+                // 更新类别计数（考虑搜索后的结果）
+                updateCategoryCountsAfterSearch();
                 return;
             }
             
@@ -764,7 +839,11 @@
             }
             
             // 延迟加载内容，给骨架屏显示时间
-            setTimeout(loadThoughts, 1000);
+            setTimeout(() => {
+                loadThoughts();
+                // 更新类别计数（考虑筛选后的结果）
+                updateCategoryCountsAfterSearch();
+            }, 1000);
         }
 
         // 处理滚动加载
@@ -913,6 +992,9 @@
         function init() {
             // 加载初始思考内容
             resetAndLoadThoughts();
+            
+            // 更新类别计数
+            updateCategoryCounts();
             
             // 注册滚动事件
             window.addEventListener('scroll', handleScroll);
