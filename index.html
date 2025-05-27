@@ -773,7 +773,7 @@
             const remainingCount = totalCount - currentCount;
             const countToLoad = Math.min(loadCount, remainingCount);
             
-            // 模拟加载延迟
+            // 模拟加载延迟（缩短为300ms）
             setTimeout(() => {
                 // 添加新的思考卡片
                 for (let i = 0; i < countToLoad; i++) {
@@ -791,7 +791,7 @@
                 }
                 
                 isLoading = false;
-            }, 800);
+            }, 300); // 缩短加载延迟
         }    
 
         // 重置并重新加载思考内容
@@ -838,12 +838,10 @@
                 thoughtsContainer.appendChild(skeletonCard);
             }
             
-            // 延迟加载内容，给骨架屏显示时间
-            setTimeout(() => {
-                loadThoughts();
-                // 更新类别计数（考虑筛选后的结果）
-                updateCategoryCountsAfterSearch();
-            }, 1000);
+            // 立即加载内容（移除1000ms延迟）
+            loadThoughts();
+            // 更新类别计数（考虑筛选后的结果）
+            updateCategoryCountsAfterSearch();
         }
 
         // 处理滚动加载
