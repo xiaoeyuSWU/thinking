@@ -189,6 +189,7 @@
                         <a href="#" data-category="hobby" class="block px-4 py-2 text-sm hover:bg-primary/10 hover:text-primary">爱好</a>
                         <a href="#" data-category="milestone" class="block px-4 py-2 text-sm hover:bg-primary/10 hover:text-primary">大事记</a>
                         <a href="#" data-category="study" class="block px-4 py-2 text-sm hover:bg-primary/10 hover:text-primary">学业</a>
+                        <a href="#" data-category="life" class="block px-4 py-2 text-sm hover:bg-primary/10 hover:text-primary">生活</a>
                     </div>
                 </div>
                 <a href="#about" class="font-medium text-dark hover:text-primary transition-colors">关于</a>
@@ -236,6 +237,7 @@
                             <a href="#" data-category="hobby" class="block py-2 text-sm">爱好</a>
                             <a href="#" data-category="milestone" class="block py-2 text-sm">大事记</a>
                             <a href="#" data-category="study" class="block py-2 text-sm">学业</a>
+                            <a href="#" data-category="life" class="block py-2 text-sm">生活</a>
                         </div>
                     </div>
                     <a href="#about" class="font-medium text-dark hover:text-primary transition-colors py-2">关于</a>
@@ -260,6 +262,7 @@
                 <button data-category="hobby" class="category-btn bg-white text-dark px-4 py-2 rounded-full text-sm font-medium transition-all">爱好</button>
                 <button data-category="milestone" class="category-btn bg-white text-dark px-4 py-2 rounded-full text-sm font-medium transition-all">大事记</button>
                 <button data-category="study" class="category-btn bg-white text-dark px-4 py-2 rounded-full text-sm font-medium transition-all">学业</button>
+                <button data-category="life" class="category-btn bg-white text-dark px-4 py-2 rounded-full text-sm font-medium transition-all">生活</button>
             </div>
             
             <!-- 思考内容流 -->
@@ -476,6 +479,14 @@
                 media: null
             },
             {
+                id: 15,
+                title: "有时要把目光拉长，有时要把目光拉短",
+                content: "人生，长远的看，有好多事情要做哇。有的时候想到，难免也会有些焦虑。如果把目光拉短，享受当下，就更会发现生活的美好。生活中总有一些小小的幸福时刻，比如清晨的第一缕阳光、一杯热咖啡、一本好书，或者与朋友的一次愉快聊天。这些看似平凡的瞬间，却是构成美好人生的重要部分。",
+                category: "life",
+                date: "2025-05-20",
+                media: null
+            },
+            {
                 id: 16,
                 title: "担任比亚迪校园大使",
                 content: "作为比亚迪2025届校园大使，我协助HR进行校招相关事宜，向同学们介绍比亚迪的企业文化和招聘信息。这段经历让我对汽车行业有了更深入的了解，也锻炼了我的沟通和组织能力。",
@@ -491,6 +502,15 @@
                 date: "2025-05-27",
                 media: null
             },
+            {
+                id: 18,
+                title: "事常与人违，事总在人为",
+                content: "好事坏事，都会变成故事^ ^",
+                category: "life",
+                date: "2025-05-15",
+                media: null
+            },
+
         ];
 
         // 当前显示的思考数量
@@ -524,7 +544,8 @@
             'ai': 'AI',
             'hobby': '爱好',
             'milestone': '大事记',
-            'study': '学业'
+            'study': '学业',
+            'life': '生活'
         };
 
         // 分类颜色映射
@@ -532,7 +553,8 @@
             'ai': 'bg-blue-500',
             'hobby': 'bg-purple-500',
             'milestone': 'bg-orange-500',
-            'study': 'bg-green-500'
+            'study': 'bg-green-500',
+            'life': 'bg-pink-500'
         };
 
         // 计算每个类别的内容数量
@@ -542,7 +564,8 @@
                 ai: 0,
                 hobby: 0,
                 milestone: 0,
-                study: 0
+                study: 0,
+                life: 0
             };
             
             thoughts.forEach(thought => {
@@ -578,6 +601,9 @@
                         break;
                     case 'study':
                         buttonText = '学业';
+                        break;
+                    case 'life':
+                        buttonText = '生活';
                         break;
                 }
                 
@@ -715,7 +741,8 @@
                 ai: filterThoughts('ai', currentSearchTerm).length,
                 hobby: filterThoughts('hobby', currentSearchTerm).length,
                 milestone: filterThoughts('milestone', currentSearchTerm).length,
-                study: filterThoughts('study', currentSearchTerm).length
+                study: filterThoughts('study', currentSearchTerm).length,
+                life: filterThoughts('life', currentSearchTerm).length
             };
             
             const categoryButtons = document.querySelectorAll('.category-btn');
@@ -738,6 +765,9 @@
                         break;
                     case 'study':
                         buttonText = '学业';
+                        break;
+                    case 'life':
+                        buttonText = '生活';
                         break;
                 }
                 
