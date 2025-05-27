@@ -841,14 +841,12 @@
                             
                             // 导航菜单中的分类链接
                             if (btn.tagName === 'A') {
-                                // 移除所有可能冲突的样式
-                                btn.classList.remove('text-dark', 'bg-primary/10');
-                                // 添加正确的主色样式
-                                btn.classList.add('bg-primary', 'text-white', 'font-medium');
+                                btn.classList.add('text-primary', 'font-medium');
+                                btn.classList.remove('text-dark');
                                 
-                                // 特别处理移动端分类链接的圆角样式
+                                // 修复移动端分类链接背景问题
                                 if (btn.closest('#mobile-category-menu')) {
-                                    btn.classList.add('rounded-full', 'px-3', 'py-1', 'mx-1');
+                                    btn.classList.add('bg-primary/10');
                                 }
                             }
                         }
