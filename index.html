@@ -602,13 +602,12 @@
                             
                             // 导航菜单中的分类链接
                             if (btn.tagName === 'A') {
-                                btn.classList.add('text-white', 'font-medium', 'bg-primary');
-                                btn.classList.remove('text-dark', 'bg-white', 'bg-primary/5');
+                                btn.classList.add('text-primary', 'font-medium');
+                                btn.classList.remove('text-dark');
                                 
                                 // 修复移动端分类链接背景问题
                                 if (btn.closest('#mobile-category-menu')) {
-                                    btn.classList.add('bg-primary');
-                                    btn.classList.remove('bg-primary/10');
+                                    btn.classList.add('bg-primary/10');
                                 }
                             }
                         } else {
@@ -620,12 +619,12 @@
                             
                             // 导航菜单中的分类链接
                             if (btn.tagName === 'A') {
-                                btn.classList.remove('text-white', 'font-medium', 'bg-primary');
-                                btn.classList.add('text-dark', 'bg-white');
+                                btn.classList.remove('text-primary', 'font-medium');
+                                btn.classList.add('text-dark');
                                 
                                 // 修复移动端分类链接背景问题
                                 if (btn.closest('#mobile-category-menu')) {
-                                    btn.classList.remove('bg-primary');
+                                    btn.classList.remove('bg-primary/10');
                                 }
                             }
                         }
@@ -644,7 +643,7 @@
                     resetAndLoadThoughts();
                 });
             });
-        }       
+        }    
 
         // 处理搜索
         function handleSearch() {
