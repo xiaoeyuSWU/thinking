@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MindLog | SambyLi</title>
+    <title>MindLog_real | SambyLi</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <script>
@@ -55,6 +55,25 @@
                 50% {
                     opacity: 0.5;
                 }
+            }
+            .image-grid {
+                display: grid;
+                gap: 8px;
+                grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            }
+            .image-container {
+                aspect-ratio: 1;
+                border-radius: 8px;
+                overflow: hidden;
+            }
+            .image-container img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                transition: transform 0.3s ease;
+            }
+            .image-container:hover img {
+                transform: scale(1.05);
             }
         }
     </style>
@@ -163,16 +182,222 @@
             padding-top: 0.5rem;
             padding-bottom: 0.5rem;
         }
+        
+        /* 密码验证界面样式（修改为全屏模态框） */
+        .password-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #4A6FA5 0%, #3D405B 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 999;
+            transition: opacity 0.5s ease;
+        }
+        
+        .password-card {
+            background-color: white;
+            border-radius: 16px;
+            box-shadow: 0 10px 50px rgba(0, 0, 0, 0.2);
+            max-width: 400px;
+            width: 100%;
+            padding: 40px;
+            transform: translateY(0);
+            transition: transform 0.5s ease, box-shadow 0.5s ease;
+        }
+        
+        .password-card:hover {
+            box-shadow: 0 15px 60px rgba(0, 0, 0, 0.3);
+            transform: translateY(-5px);
+        }
+        
+        .password-icon {
+            width: 80px;
+            height: 80px;
+            background-color: #4A6FA5;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 30px;
+            color: white;
+            font-size: 32px;
+            transition: all 0.3s ease;
+        }
+        
+        .password-icon:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 20px rgba(74, 111, 165, 0.5);
+        }
+        
+        .password-input {
+            padding: 12px 16px;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+            width: 100%;
+            transition: all 0.2s ease;
+        }
+        
+        .password-input:focus {
+            outline: none;
+            border-color: #4A6FA5;
+            box-shadow: 0 0 0 3px rgba(74, 111, 165, 0.2);
+        }
+        
+        .password-button {
+            background-color: #4A6FA5;
+            color: white;
+            padding: 12px 16px;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            width: 100%;
+        }
+        
+        .password-button:hover {
+            background-color: #3a5a85;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(74, 111, 165, 0.3);
+        }
+        
+        .password-button:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 6px rgba(74, 111, 165, 0.3);
+        }
+        
+        .password-error {
+            color: #e07a5f;
+            font-size: 14px;
+            margin-top: 10px;
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+        }
+        
+        .password-error.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* 内容淡入效果 */
+        .content-fade-in {
+            animation: fadeIn 0.5s ease forwards;
+            opacity: 0;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* 图片预览样式 */
+        .image-preview {
+            height: 180px;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 12px;
+        }
+        
+        .image-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        
+        .image-preview:hover img {
+            transform: scale(1.03);
+        }
+        
+        .image-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+        
+        .image-modal-content {
+            max-width: 90%;
+            max-height: 90%;
+            position: relative;
+        }
+        
+        .image-modal-content img {
+            max-width: 100%;
+            max-height: 90vh;
+            object-fit: contain;
+        }
+        
+        .image-modal-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            background: rgba(0,0,0,0.5);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
     </style>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body class="font-inter bg-neutral/30 text-dark min-h-screen flex flex-col">
+    <!-- 密码验证界面（修改为模态框） -->
+    <div id="password-modal" class="password-modal">
+        <div class="password-card">
+            <div class="password-icon">
+                <i class="fa fa-lock"></i>
+            </div>
+            <h2 class="text-2xl font-bold text-center text-dark mb-2">私密内容</h2>
+            <p class="text-gray-500 text-center mb-8">请输入密码访问</p>
+            
+            <form id="password-form" class="space-y-4">
+                <div>
+                    <label for="password" class="block text-sm font-medium text-gray-700 mb-1">密码</label>
+                    <div class="relative">
+                        <input 
+                            type="password" 
+                            id="password" 
+                            class="password-input focus:ring-primary-300 focus:border-primary"
+                            placeholder="请输入密码"
+                            required
+                        >
+                        <button type="button" id="toggle-password" class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-primary transition-colors">
+                            <i class="fa fa-eye-slash"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="password-error" id="password-error">密码错误，请重试</div>
+                
+                <button type="submit" class="password-button hover-shadow-lg hover-translate-y-1">
+                    确认
+                </button>
+            </form>
+        </div>
+    </div>
+
     <!-- 导航栏 -->
-    <header id="navbar" class="fixed w-full bg-white/90 backdrop-blur-sm z-50 transition-all duration-300">
+    <header id="navbar" class="fixed w-full bg-white/90 backdrop-blur-sm z-50 transition-all duration-300 content-fade-in" style="opacity: 0; visibility: hidden;">
         <div class="container mx-auto px-4 py-3 flex items-center justify-between nav-shadow">
             <a href="#" class="flex items-center space-x-2">
                 <span class="text-primary text-2xl"><i class="fa fa-lightbulb-o"></i></span>
-                <span class="font-bold text-xl text-dark">MindLog</span>
+                <span class="font-bold text-xl text-dark">MindLog_real</span>
             </a>
             
             <!-- 桌面端导航 -->
@@ -185,11 +410,11 @@
                     </button>
                     <div class="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50">
                         <a href="#" data-category="all" class="block px-4 py-2 text-sm hover:bg-primary/10 hover:text-primary">全部</a>
-                        <a href="#" data-category="ai" class="block px-4 py-2 text-sm hover:bg-primary/10 hover:text-primary">AI</a>
-                        <a href="#" data-category="hobby" class="block px-4 py-2 text-sm hover:bg-primary/10 hover:text-primary">爱好</a>
-                        <a href="#" data-category="milestone" class="block px-4 py-2 text-sm hover:bg-primary/10 hover:text-primary">大事记</a>
-                        <a href="#" data-category="study" class="block px-4 py-2 text-sm hover:bg-primary/10 hover:text-primary">学业</a>
-                        <a href="#" data-category="life" class="block px-4 py-2 text-sm hover:bg-primary/10 hover:text-primary">生活</a>
+                        <a href="#" data-category="xueye" class="block px-4 py-2 text-sm hover:bg-primary/10 hover:text-primary">学业</a>
+                        <a href="#" data-category="shiye" class="block px-4 py-2 text-sm hover:bg-primary/10 hover:text-primary">事业</a>
+                        <a href="#" data-category="ganqing" class="block px-4 py-2 text-sm hover:bg-primary/10 hover:text-primary">感情</a>
+                        <a href="#" data-category="shenghuo" class="block px-4 py-2 text-sm hover:bg-primary/10 hover:text-primary">生活</a>
+                        <a href="#" data-category="qita" class="block px-4 py-2 text-sm hover:bg-primary/10 hover:text-primary">其他</a>
                     </div>
                 </div>
                 <a href="#about" class="font-medium text-dark hover:text-primary transition-colors">关于</a>
@@ -233,11 +458,11 @@
                         </button>
                         <div id="mobile-category-menu" class="mt-1 ml-4 hidden">
                             <a href="#" data-category="all" class="block py-2 text-sm">全部</a>
-                            <a href="#" data-category="ai" class="block py-2 text-sm">AI</a>
-                            <a href="#" data-category="hobby" class="block py-2 text-sm">爱好</a>
-                            <a href="#" data-category="milestone" class="block py-2 text-sm">大事记</a>
-                            <a href="#" data-category="study" class="block py-2 text-sm">学业</a>
-                            <a href="#" data-category="life" class="block py-2 text-sm">生活</a>
+                            <a href="#" data-category="xueye" class="block py-2 text-sm">学业</a>
+                            <a href="#" data-category="shiye" class="block py-2 text-sm">事业</a>
+                            <a href="#" data-category="ganqing" class="block py-2 text-sm">感情</a>
+                            <a href="#" data-category="shenghuo" class="block py-2 text-sm">生活</a>
+                            <a href="#" data-category="qita" class="block py-2 text-sm">其他</a>
                         </div>
                     </div>
                     <a href="#about" class="font-medium text-dark hover:text-primary transition-colors py-2">关于</a>
@@ -247,33 +472,24 @@
     </header>
 
     <!-- 主内容区 -->
-    <main class="flex-grow pt-20 pb-10">
+    <main class="flex-grow pt-20 pb-10 content-fade-in" style="opacity: 0; visibility: hidden;">
         <div class="container mx-auto px-4">
             <!-- 页面标题 -->
             <div class="text-center mb-12 mt-6">
-                <h1 class="text-[clamp(2rem,5vw,3rem)] font-bold text-dark mb-3">MindLog</h1>
-                <div class="flex justify-center space-x-6 mb-6">
-                    <a href="https://liboyuan.site/" target="_blank" class="text-primary hover:text-primary/80 transition-colors">
-                        <i class="fa fa-globe text-2xl"></i>
-                    </a>
-                    <a href="mailto:1920295921@qq.com" target="_blank" class="text-primary hover:text-primary/80 transition-colors">
-                        <i class="fa fa-envelope text-2xl"></i>
-                    </a>
-                    <a href="https://github.com/xiaoeyuSWU" target="_blank" class="text-primary hover:text-primary/80 transition-colors">
-                        <i class="fa fa-github text-2xl"></i>
-                    </a>
-                </div>
-                <p class="text-gray-600 max-w-2xl mx-auto text-balance">喜欢您来 这是我记录自己大学时光的地方<br>弥补我中学时期没有太多记录生活的遗憾<br>毕竟 干嘛不记录 又不是年年20岁</p>
+                <h1 class="text-[clamp(2rem,5vw,3rem)] font-bold text-dark mb-3">MindLog_real</h1>
+                <p class="text-gray-600 max-w-2xl mx-auto text-balance">一个生动和立体的李博远^ ^</p>
+                <p class="text-gray-600 max-w-2xl mx-auto text-balance">一个爱记录的李博远^ ^</p>
+
             </div>
             
             <!-- 分类标签 -->
             <div class="flex flex-wrap justify-center gap-2 mb-10">
                 <button data-category="all" class="category-btn bg-primary text-white px-4 py-2 rounded-full text-sm font-medium transition-all">全部</button>
-                <button data-category="ai" class="category-btn bg-white text-dark px-4 py-2 rounded-full text-sm font-medium transition-all">AI</button>
-                <button data-category="hobby" class="category-btn bg-white text-dark px-4 py-2 rounded-full text-sm font-medium transition-all">爱好</button>
-                <button data-category="milestone" class="category-btn bg-white text-dark px-4 py-2 rounded-full text-sm font-medium transition-all">大事记</button>
-                <button data-category="study" class="category-btn bg-white text-dark px-4 py-2 rounded-full text-sm font-medium transition-all">学业</button>
-                <button data-category="life" class="category-btn bg-white text-dark px-4 py-2 rounded-full text-sm font-medium transition-all">生活</button>
+                <button data-category="xueye" class="category-btn bg-white text-dark px-4 py-2 rounded-full text-sm font-medium transition-all">学业</button>
+                <button data-category="shiye" class="category-btn bg-white text-dark px-4 py-2 rounded-full text-sm font-medium transition-all">事业</button>
+                <button data-category="ganqing" class="category-btn bg-white text-dark px-4 py-2 rounded-full text-sm font-medium transition-all">感情</button>
+                <button data-category="shenghuo" class="category-btn bg-white text-dark px-4 py-2 rounded-full text-sm font-medium transition-all">生活</button>
+                <button data-category="qita" class="category-btn bg-white text-dark px-4 py-2 rounded-full text-sm font-medium transition-all">其他</button>
             </div>
             
             <!-- 思考内容流 -->
@@ -328,34 +544,42 @@
     </main>
 
     <!-- 关于部分 -->
-    <section id="about" class="bg-white py-16">
+    <section id="about" class="bg-white py-16 content-fade-in" style="opacity: 0; visibility: hidden;">
         <div class="container mx-auto px-4">
             <div class="max-w-3xl mx-auto text-center">
-                <h2 class="text-[clamp(1.5rem,3vw,2rem)] font-bold text-dark mb-6">关于MindLog</h2>
+                <h2 class="text-[clamp(1.5rem,3vw,2rem)] font-bold text-dark mb-6">关于MindLog_real</h2>
                 <p class="text-gray-600 mb-8 leading-relaxed">
-                    这里是我通过文字记录自己的地方<br>
-                    展示了一个更加生动和立体的我<br>
-                    包括我的日常生活、兴趣爱好、思考方式和我所关注的领域等<br>
-                    弥补我小学和中学时期没有记录生活的遗憾<br>
-                    毕竟，干嘛不记录，又不是年年20岁
+                    这里是我通过文字和图片记录自己的地方，尤其是记录自己的大学生活。<br>
+                    这将会是我最最最最宝贵的数字资源。
                 </p>
+                <div class="flex justify-center space-x-4">
+                    <a href="mailto:1920295921@qq.com" target="_blank" class="text-primary hover:text-primary/80 transition-colors">
+                        <i class="fa fa-envelope-o text-xl"></i>
+                    </a>
+                    <a href="https://github.com/xiaoeyuSWU" target="_blank" class="text-primary hover:text-primary/80 transition-colors">
+                        <i class="fa fa-github text-xl"></i>
+                    </a>
+                    <a href="https://liboyuan.com.cn/" target="_blank" class="text-primary hover:text-primary/80 transition-colors">
+                        <i class="fa fa-globe text-xl"></i>
+                    </a>
+                </div>
             </div>
         </div>
     </section>
 
     <!-- 页脚 -->
-    <footer class="bg-dark text-white py-8">
+    <footer class="bg-dark text-white py-8 content-fade-in" style="opacity: 0; visibility: hidden;">
         <div class="container mx-auto px-4">
             <div class="flex flex-col md:flex-row justify-between items-center">
                 <div class="mb-4 md:mb-0 text-center md:text-left">
                     <a href="#" class="flex items-center justify-center md:justify-start space-x-2">
                         <span class="text-white text-xl"><i class="fa fa-lightbulb-o"></i></span>
-                        <span class="font-bold text-lg">MindLog</span>
+                        <span class="font-bold text-lg">MindLog_real</span>
                     </a>
                     <p class="text-gray-400 text-sm mt-1">记录思考，见证成长</p>
                 </div>
                 <div class="text-gray-400 text-sm">
-                    &copy; 2024 MindLog | 保留所有权利
+                    &copy; 2025 MindLog_real | 保留所有权利
                 </div>
             </div>
         </div>
@@ -367,6 +591,65 @@
     </button>
 
     <script>
+        // 密码验证
+        const PASSWORD = '513870';
+        const passwordModal = document.getElementById('password-modal');
+        const passwordForm = document.getElementById('password-form');
+        const passwordInput = document.getElementById('password');
+        const passwordError = document.getElementById('password-error');
+        const togglePassword = document.getElementById('toggle-password');
+        const contentElements = document.querySelectorAll('.content-fade-in');
+        const navbar = document.getElementById('navbar');
+        
+        // 显示内容
+        function showContent() {
+            passwordModal.style.opacity = '0';
+            setTimeout(() => {
+                passwordModal.style.display = 'none';
+            }, 500);
+            
+            // 显示内容并添加淡入动画
+            contentElements.forEach(element => {
+                element.style.opacity = '1';
+                element.style.visibility = 'visible';
+            });
+            
+            // 延迟显示导航栏，使动画更流畅
+            setTimeout(() => {
+                navbar.style.opacity = '1';
+                navbar.style.visibility = 'visible';
+            }, 200);
+        }
+        
+        // 密码表单提交处理
+        passwordForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const enteredPassword = passwordInput.value.trim();
+            
+            if (enteredPassword === PASSWORD) {
+                // 密码正确，不使用localStorage保存验证状态
+                showContent();
+            } else {
+                // 密码错误
+                passwordError.classList.add('show');
+                passwordInput.classList.add('border-red-500');
+                
+                // 3秒后重置错误提示
+                setTimeout(() => {
+                    passwordError.classList.remove('show');
+                    passwordInput.classList.remove('border-red-500');
+                }, 3000);
+            }
+        });
+        
+        // 切换密码可见性
+        togglePassword.addEventListener('click', () => {
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+            togglePassword.innerHTML = type === 'password' ? '<i class="fa fa-eye-slash"></i>' : '<i class="fa fa-eye"></i>';
+        });
+        
         // 思考内容数据（将从JSON文件加载）
         let thoughts = [];
         
@@ -387,7 +670,6 @@
         const thoughtsContainer = document.getElementById('thoughts-container');
         const noMoreContentIndicator = document.getElementById('no-more-content');
         const backToTopButton = document.getElementById('back-to-top');
-        const navbar = document.getElementById('navbar');
         const mobileMenuButton = document.getElementById('mobile-menu-button');
         const mobileMenu = document.getElementById('mobile-menu');
         const mobileCategoryButton = document.getElementById('mobile-category-button');
@@ -400,26 +682,26 @@
 
         // 分类名称映射
         const categoryNames = {
-            'ai': 'AI',
-            'hobby': '爱好',
-            'milestone': '大事记',
-            'study': '学业',
-            'life': '生活'
+            'xueye': '学业',
+            'shiye': '事业',
+            'ganqing': '感情',
+            'shenghuo': '生活',
+            'qita': '其他'
         };
 
         // 分类颜色映射
         const categoryColors = {
-            'ai': 'bg-blue-500',
-            'hobby': 'bg-purple-500',
-            'milestone': 'bg-orange-500',
-            'study': 'bg-green-500',
-            'life': 'bg-pink-500'
+            'xueye': 'bg-blue-500',
+            'shiye': 'bg-purple-500',
+            'ganqing': 'bg-orange-500',
+            'shenghuo': 'bg-green-500',
+            'qita': 'bg-pink-500'
         };
 
         // 从JSON文件加载思考内容
         async function loadThoughtsFromJSON() {
             try {
-                const response = await fetch('thoughts.json');
+                const response = await fetch('thoughts_me.json');
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
@@ -443,11 +725,11 @@
         function calculateCategoryCounts() {
             const counts = {
                 all: thoughts.length,
-                ai: 0,
-                hobby: 0,
-                milestone: 0,
-                study: 0,
-                life: 0
+                xueye: 0,
+                shiye: 0,
+                ganqing: 0,
+                shenghuo: 0,
+                qita: 0
             };
             
             thoughts.forEach(thought => {
@@ -472,20 +754,20 @@
                     case 'all':
                         buttonText = '全部';
                         break;
-                    case 'ai':
-                        buttonText = 'AI';
-                        break;
-                    case 'hobby':
-                        buttonText = '爱好';
-                        break;
-                    case 'milestone':
-                        buttonText = '大事记';
-                        break;
-                    case 'study':
+                    case 'xueye':
                         buttonText = '学业';
                         break;
-                    case 'life':
+                    case 'shiye':
+                        buttonText = '事业';
+                        break;
+                    case 'ganqing':
+                        buttonText = '感情';
+                        break;
+                    case 'shenghuo':
                         buttonText = '生活';
+                        break;
+                    case 'qita':
+                        buttonText = '其他';
                         break;
                 }
                 
@@ -502,6 +784,23 @@
             // 处理内容中的换行符
             const formattedContent = thought.content.replace(/\n/g, '<br>');
             
+            // 处理图片预览
+            let imagesHtml = '';
+            if (thought.media && thought.media.length > 0) {
+                // 只显示第一张图片作为预览
+                const firstImage = thought.media[0];
+                imagesHtml = `
+                    <div class="image-preview cursor-pointer">
+                        <img 
+                            src="pic/${firstImage}" 
+                            alt="${thought.title}" 
+                            loading="lazy"
+                            data-all-images='${JSON.stringify(thought.media)}'
+                        >
+                    </div>
+                `;
+            }
+            
             // 卡片内容
             card.innerHTML = `
                 <div class="p-6">
@@ -512,6 +811,7 @@
                         <span class="ml-2 text-sm text-gray-500">${formatDate(thought.date)}</span>
                     </div>
                     <h3 class="text-xl font-bold mt-4 mb-3 text-dark">${thought.title}</h3>
+                    ${imagesHtml}
                     <p class="text-gray-600 mb-4 line-clamp-4">${formattedContent}</p>
                     <button class="read-more-btn text-primary font-medium hover:text-primary/80 transition-colors flex items-center">
                         阅读更多
@@ -526,6 +826,16 @@
                 showThoughtDetail(thought);
             });
             
+            // 添加图片预览点击事件
+            if (thought.media && thought.media.length > 0) {
+                const imagePreview = card.querySelector('.image-preview');
+                imagePreview.addEventListener('click', (e) => {
+                    const imgElement = e.currentTarget.querySelector('img');
+                    const allImages = JSON.parse(imgElement.dataset.allImages);
+                    showImageGallery(allImages);
+                });
+            }
+            
             return card;
         }
 
@@ -539,6 +849,28 @@
         function showThoughtDetail(thought) {
             // 处理内容中的换行符
             const formattedContent = thought.content.replace(/\n/g, '<br>');
+            
+            // 处理图片网格
+            let imagesHtml = '';
+            if (thought.media && thought.media.length > 0) {
+                imagesHtml = `
+                    <div class="mt-6">
+                        <h4 class="text-lg font-semibold mb-3 text-dark">相关图片</h4>
+                        <div class="image-grid">
+                            ${thought.media.map(image => `
+                                <div class="image-container cursor-pointer">
+                                    <img 
+                                        src="pic/${image}" 
+                                        alt="${thought.title}" 
+                                        loading="lazy"
+                                        data-all-images='${JSON.stringify(thought.media)}'
+                                    >
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            }
             
             // 创建遮罩层
             const overlay = document.createElement('div');
@@ -564,6 +896,7 @@
                     </div>
                     <h2 class="text-2xl font-bold mt-6 mb-4 text-dark">${thought.title}</h2>
                     <p class="text-gray-700 leading-relaxed">${formattedContent}</p>
+                    ${imagesHtml}
                 </div>
             `;
             
@@ -590,6 +923,127 @@
                     document.body.removeChild(overlay);
                 }
             });
+            
+            // 为详情页中的图片添加点击事件
+            if (thought.media && thought.media.length > 0) {
+                const imageContainers = modal.querySelectorAll('.image-container');
+                imageContainers.forEach(container => {
+                    container.addEventListener('click', (e) => {
+                        const imgElement = e.currentTarget.querySelector('img');
+                        const allImages = JSON.parse(imgElement.dataset.allImages);
+                        showImageGallery(allImages);
+                    });
+                });
+            }
+        }
+        
+        // 显示图片画廊 - 修改后的版本
+        function showImageGallery(images) {
+            const overlay = document.createElement('div');
+            overlay.className = 'image-modal';
+            
+            // 创建图片容器
+            const content = document.createElement('div');
+            content.className = 'image-modal-content';
+            
+            // 当前显示的图片索引
+            let currentIndex = 0;
+            
+            // 添加图片
+            const img = document.createElement('img');
+            img.src = `pic/${images[currentIndex]}`;
+            img.alt = '图片预览';
+            content.appendChild(img);
+            
+            // 添加关闭按钮
+            const closeBtn = document.createElement('div');
+            closeBtn.className = 'image-modal-close';
+            closeBtn.innerHTML = '<i class="fa fa-times"></i>';
+            content.appendChild(closeBtn);
+            
+            // 添加左右箭头导航
+            const prevBtn = document.createElement('div');
+            prevBtn.className = 'absolute left-4 top-1/2 -translate-y-1/2 bg-black/50 text-white w-10 h-10 rounded-full flex items-center justify-center cursor-pointer';
+            prevBtn.innerHTML = '<i class="fa fa-chevron-left"></i>';
+            content.appendChild(prevBtn);
+            
+            const nextBtn = document.createElement('div');
+            nextBtn.className = 'absolute right-4 top-1/2 -translate-y-1/2 bg-black/50 text-white w-10 h-10 rounded-full flex items-center justify-center cursor-pointer';
+            nextBtn.innerHTML = '<i class="fa fa-chevron-right"></i>';
+            content.appendChild(nextBtn);
+            
+            // 添加图片指示器
+            const indicator = document.createElement('div');
+            indicator.className = 'absolute bottom-4 left-1/2 -translate-x-1/2 bg-black/50 text-white px-3 py-1 rounded-full text-sm';
+            indicator.textContent = `${currentIndex + 1}/${images.length}`;
+            content.appendChild(indicator);
+            
+            overlay.appendChild(content);
+            document.body.appendChild(overlay);
+            
+            // 更新图片显示
+            function updateImage() {
+                img.src = `pic/${images[currentIndex]}`;
+                indicator.textContent = `${currentIndex + 1}/${images.length}`;
+            }
+            
+            // 上一张图片
+            prevBtn.addEventListener('click', () => {
+                currentIndex = (currentIndex - 1 + images.length) % images.length;
+                updateImage();
+            });
+            
+            // 下一张图片
+            nextBtn.addEventListener('click', () => {
+                currentIndex = (currentIndex + 1) % images.length;
+                updateImage();
+            });
+            
+            // 键盘导航
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'ArrowLeft') {
+                    currentIndex = (currentIndex - 1 + images.length) % images.length;
+                    updateImage();
+                } else if (e.key === 'ArrowRight') {
+                    currentIndex = (currentIndex + 1) % images.length;
+                    updateImage();
+                } else if (e.key === 'Escape') {
+                    document.body.removeChild(overlay);
+                }
+            });
+            
+            // 关闭事件
+            closeBtn.addEventListener('click', () => {
+                document.body.removeChild(overlay);
+                // 移除键盘事件监听
+                document.removeEventListener('keydown', handleKeydown);
+            });
+            
+            // 点击遮罩层关闭
+            overlay.addEventListener('click', (e) => {
+                if (e.target === overlay) {
+                    document.body.removeChild(overlay);
+                    // 移除键盘事件监听
+                    document.removeEventListener('keydown', handleKeydown);
+                }
+            });
+            
+            // 键盘事件处理函数
+            function handleKeydown(e) {
+                if (e.key === 'ArrowLeft') {
+                    currentIndex = (currentIndex - 1 + images.length) % images.length;
+                    updateImage();
+                } else if (e.key === 'ArrowRight') {
+                    currentIndex = (currentIndex + 1) % images.length;
+                    updateImage();
+                } else if (e.key === 'Escape') {
+                    document.body.removeChild(overlay);
+                    document.removeEventListener('keydown', handleKeydown);
+                }
+            }
+            
+            // 添加键盘事件监听
+            document.addEventListener('keydown', handleKeydown);
         }
 
         // 筛选思考内容
@@ -620,11 +1074,11 @@
         function updateCategoryCountsAfterSearch() {
             const counts = {
                 all: filterThoughts('all', currentSearchTerm).length,
-                ai: filterThoughts('ai', currentSearchTerm).length,
-                hobby: filterThoughts('hobby', currentSearchTerm).length,
-                milestone: filterThoughts('milestone', currentSearchTerm).length,
-                study: filterThoughts('study', currentSearchTerm).length,
-                life: filterThoughts('life', currentSearchTerm).length
+                xueye: filterThoughts('xueye', currentSearchTerm).length,
+                shiye: filterThoughts('shiye', currentSearchTerm).length,
+                ganqing: filterThoughts('ganqing', currentSearchTerm).length,
+                shenghuo: filterThoughts('shenghuo', currentSearchTerm).length,
+                qita: filterThoughts('qita', currentSearchTerm).length
             };
             
             const categoryButtons = document.querySelectorAll('.category-btn');
@@ -636,20 +1090,20 @@
                     case 'all':
                         buttonText = '全部';
                         break;
-                    case 'ai':
-                        buttonText = 'AI';
-                        break;
-                    case 'hobby':
-                        buttonText = '爱好';
-                        break;
-                    case 'milestone':
-                        buttonText = '大事记';
-                        break;
-                    case 'study':
+                    case 'xueye':
                         buttonText = '学业';
                         break;
-                    case 'life':
+                    case 'shiye':
+                        buttonText = '事业';
+                        break;
+                    case 'ganqing':
+                        buttonText = '感情';
+                        break;
+                    case 'shenghuo':
                         buttonText = '生活';
+                        break;
+                    case 'qita':
+                        buttonText = '其他';
                         break;
                 }
                 
@@ -904,6 +1358,9 @@
 
         // 初始化
         async function init() {
+            // 直接显示密码验证界面，不检查本地存储
+            passwordModal.style.display = 'flex';
+            
             // 从JSON加载数据
             await loadThoughtsFromJSON();
             
