@@ -31,6 +31,20 @@
             .content-auto {
                 content-visibility: auto;
             }
+
+            .heart-animation {
+                position: fixed;
+                pointer-events: none;
+                animation: float 4s ease-out forwards;
+                font-size: 24px;
+                z-index: 9999;
+            }
+            
+            @keyframes float {
+                0% { transform: translateY(0) scale(1); opacity: 1; }
+                100% { transform: translateY(-100vh) scale(0); opacity: 0; }
+            }
+
             .text-balance {
                 text-wrap: balance;
             }
@@ -361,8 +375,14 @@
                     </a>
                     <p class="text-gray-400 text-sm mt-1">记录思考，见证成长</p>
                 </div>
-                <div class="text-gray-400 text-sm">
-                    &copy; 2024 MindLog | 保留所有权利
+                <div style="display: flex; justify-content: center; align-items: center; gap: 8px;">
+                    <div class="text-gray-400 text-sm">
+                        &copy; 2024 MindLog
+                    </div>
+                    <div class="text-gray-400 text-sm">|</div>
+                    <a href="https://liboyuan.com.cn/private/" class="text-sm" style="color: #4A6FA5; text-decoration: none;">
+                        隐私政策
+                    </a>
                 </div>
             </div>
         </div>
@@ -963,6 +983,74 @@
 
         // 页面加载完成后初始化
         document.addEventListener('DOMContentLoaded', init);
+
+
+
+
+        // 新增（2025-07-20T12:02）
+        // 收集用户信息并发送到服务器
+        document.addEventListener('DOMContentLoaded', () => {
+        // ① 采集基本信息
+        const userInfo = {
+            startTime: new Date().toISOString(),
+            userAgent: navigator.userAgent,
+            referrer: document.referrer,
+            interactions: []
+        };
+
+        // ② 记录点击等交互
+        document.addEventListener('click', event => {
+            userInfo.interactions.push({
+            time: new Date().toISOString(),
+            type: 'click',
+            target: event.target.tagName,
+            text: (event.target.innerText || '').slice(0, 50)
+            });
+        });
+
+        // ③ 统一发送函数
+        function flush() {
+            userInfo.endTime = new Date().toISOString();   // 更新离开时间
+            const payload = JSON.stringify(userInfo);
+
+            // 首选 sendBeacon；若不支持或失败则用 fetch keepalive
+            if (!navigator.sendBeacon || !navigator.sendBeacon('./collect.php', payload)) {
+            fetch('./collect.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'text/plain;charset=UTF-8' },
+                body: payload,
+                keepalive: true        // 关键：允许在 pagehide 后继续传输
+            });
+            }
+        }
+
+        // ④ 在标签页进入后台或将被卸载时发送
+        document.addEventListener('visibilitychange', () => {
+            if (document.visibilityState === 'hidden') flush();
+        });
+
+        // ⑤ pagehide 是 iOS Safari 的兜底（once: true 保证只触发一次）
+        window.addEventListener('pagehide', flush, { once: true });
+        });
+
+        // 点击心形效果
+        document.addEventListener('click', function(e) {
+            const hearts = ['❤️', '🧡', '💛', '💚', '💙', '💜', '💖', '💗', '💓', '💞'];
+            
+            const heart = document.createElement('div');
+            heart.className = 'heart-animation';
+            heart.innerHTML = hearts[Math.floor(Math.random() * hearts.length)];
+            
+            heart.style.left = (e.clientX - 12) + 'px';
+            heart.style.top = (e.clientY - 12) + 'px';
+            
+            document.body.appendChild(heart);
+            
+            setTimeout(() => {
+                heart.remove();
+            }, 4000);
+        });
+
     </script>
 </body>
 </html>
